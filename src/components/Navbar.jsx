@@ -15,8 +15,8 @@ function Navbar({ onStartSurvey }) {
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
         <h1 className="text-3xl font-extrabold tracking-tight">
-          <span className="text-gray-900">Biz</span>
-          <span className="text-[#D4AF37]">Pulse</span>
+          <span className="text-gray-900">pu</span>
+          <span className="text-[#D4AF37]">lse</span>
         </h1>
 
         <div className="flex items-center gap-3">

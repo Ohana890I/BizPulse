@@ -6,13 +6,13 @@ function Footer() {
   const content =
     language === "he"
       ? {
-          copy: "© 2026 BizPulse. נבנה כדי לפתור בעיות אמיתיות בעסקים.",
+          copy: "© 2026 Pulse. נבנה כדי לפתור בעיות אמיתיות בעסקים.",
           contact: "יצירת קשר",
           privacy: "מדיניות פרטיות",
           terms: "תנאי שימוש",
         }
       : {
-          copy: "© 2026 BizPulse. Built to solve real business problems.",
+          copy: "© 2026 Pulse. Built to solve real business problems.",
           contact: "Contact",
           privacy: "Privacy Policy",
           terms: "Terms of Use",
@@ -22,8 +22,7 @@ function Footer() {
     <footer className="border-t border-gray-200 bg-white py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center md:flex-row">
         <h2 className="text-2xl font-bold">
-          <span className="text-gray-900">Biz</span>
-          <span className="text-[#D4AF37]">Pulse</span>
+          <span className="text-gray-900">Pulse</span>
         </h2>
 
         <p className="text-gray-500">{content.copy}</p>

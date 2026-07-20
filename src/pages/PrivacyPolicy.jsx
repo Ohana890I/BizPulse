@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
           title: "מדיניות פרטיות",
           updated: "עודכן לאחרונה: 20 ביולי 2026",
           intro:
-            "BizPulse מכבדת את הפרטיות שלכם. המסמך הזה מסביר איזה מידע אנחנו אוספים, איך אנחנו משתמשים בו, ואיך אנחנו שומרים עליו.",
+            "Pulse מכבדת את הפרטיות שלכם. המסמך הזה מסביר איזה מידע אנחנו אוספים, איך אנחנו משתמשים בו, ואיך אנחנו שומרים עליו.",
           sections: [
             {
               title: "1. איזה מידע נאסף",
@@ -118,7 +118,7 @@ export default function PrivacyPolicy() {
           title: "Privacy Policy",
           updated: "Last updated: July 20, 2026",
           intro:
-            "BizPulse respects your privacy. This policy explains what information we collect, how we use it, and how we protect it.",
+            "Pulse respects your privacy. This policy explains what information we collect, how we use it, and how we protect it.",
           sections: [
             {
               title: "1. Information We Collect",

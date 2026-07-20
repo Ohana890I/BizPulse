@@ -25,7 +25,7 @@ export default function TermsOfUse() {
           title: "תנאי שימוש",
           updated: "עודכן לאחרונה: 20 ביולי 2026",
           intro:
-            "השימוש באתר ובשירותי BizPulse כפוף לתנאים הבאים. שימוש באתר מהווה הסכמה לתנאים אלו.",
+            "השימוש באתר ובשירותי Pulse כפוף לתנאים הבאים. שימוש באתר מהווה הסכמה לתנאים אלו.",
           sections: [
             {
               title: "1. קבלת התנאים",
@@ -51,7 +51,7 @@ export default function TermsOfUse() {
             {
               title: "4. קניין רוחני",
               paragraphs: [
-                "כל הזכויות באתר, בעיצוב, במותג, ובתוכן המקורי שמורות ל-BizPulse אלא אם צוין אחרת.",
+                "כל הזכויות באתר, בעיצוב, במותג, ובתוכן המקורי שמורות ל-Pulse אלא אם צוין אחרת.",
                 "אין להעתיק, להפיץ, או להשתמש בתכנים ללא אישור מראש ובכתב.",
               ],
             },
@@ -66,7 +66,7 @@ export default function TermsOfUse() {
               title: "6. הגבלת אחריות",
               paragraphs: [
                 "השירות ניתן כפי שהוא (AS IS) וללא התחייבות להתאמה מלאה לצרכים ספציפיים.",
-                "בכפוף לדין החל, BizPulse לא תהיה אחראית לנזק עקיף, תוצאתי, או אובדן נתונים או רווחים הנובע מהשימוש בשירות.",
+                "בכפוף לדין החל, Pulse לא תהיה אחראית לנזק עקיף, תוצאתי, או אובדן נתונים או רווחים הנובע מהשימוש בשירות.",
               ],
             },
             {
@@ -92,7 +92,7 @@ export default function TermsOfUse() {
             {
               title: "10. שיפוי",
               paragraphs: [
-                "הנכם מתחייבים לשפות את BizPulse בגין כל נזק, תביעה, או הוצאה שייגרמו עקב הפרת תנאים אלה או הפרת דין מצדכם.",
+                "הנכם מתחייבים לשפות את Pulse בגין כל נזק, תביעה, או הוצאה שייגרמו עקב הפרת תנאים אלה או הפרת דין מצדכם.",
               ],
             },
             {
@@ -122,7 +122,7 @@ export default function TermsOfUse() {
           title: "Terms of Use",
           updated: "Last updated: July 20, 2026",
           intro:
-            "Use of the BizPulse website and services is subject to these terms. By using the site, you agree to these Terms of Use.",
+            "Use of the Pulse website and services is subject to these terms. By using the site, you agree to these Terms of Use.",
           sections: [
             {
               title: "1. Acceptance of Terms",
@@ -148,7 +148,7 @@ export default function TermsOfUse() {
             {
               title: "4. Intellectual Property",
               paragraphs: [
-                "All rights in the website, design, branding, and original content belong to BizPulse unless otherwise stated.",
+                "All rights in the website, design, branding, and original content belong to Pulse unless otherwise stated.",
                 "You may not copy, distribute, or reuse content without prior written permission.",
               ],
             },
@@ -163,7 +163,7 @@ export default function TermsOfUse() {
               title: "6. Limitation of Liability",
               paragraphs: [
                 "The service is provided on an AS IS basis without warranties of suitability for every specific use case.",
-                "To the maximum extent permitted by law, BizPulse is not liable for indirect, consequential, or incidental damages, including data loss or loss of profits.",
+                "To the maximum extent permitted by law, Pulse is not liable for indirect, consequential, or incidental damages, including data loss or loss of profits.",
               ],
             },
             {
@@ -189,7 +189,7 @@ export default function TermsOfUse() {
             {
               title: "10. Indemnification",
               paragraphs: [
-                "You agree to indemnify and hold BizPulse harmless from claims, damages, losses, and expenses arising from your breach of these terms or violation of applicable law.",
+                "You agree to indemnify and hold Pulse harmless from claims, damages, losses, and expenses arising from your breach of these terms or violation of applicable law.",
               ],
             },
             {

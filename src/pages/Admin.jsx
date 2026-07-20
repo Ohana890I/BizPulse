@@ -97,7 +97,7 @@ export default function Admin() {
   const copy =
     language === "he"
       ? {
-          admin: "ניהול BizPulse",
+          admin: "ניהול Pulse",
           title: "לוח תגובות",
           description:
             "סקירה של כל השליחות במקום אחד, חיפוש בתוך כל התשובות, ופתיחת תגובה בלי לצאת מהדשבורד.",
@@ -118,7 +118,7 @@ export default function Admin() {
           authError: "סיסמה שגויה.",
         }
       : {
-          admin: "BizPulse Admin",
+          admin: "Pulse Admin",
           title: "Responses dashboard",
           description:
             "Review every submission from one place, search across all answers, and open a response without leaving the dashboard.",
