@@ -72,7 +72,7 @@ export default function TermsOfUse() {
             {
               title: "7. יצירת קשר",
               paragraphs: [
-                "לשאלות בנוגע לתנאי השימוש ניתן לפנות אלינו בכתובת: oilay189@gmail.com",
+                "לשאלות בנוגע לתנאי השימוש ניתן לפנות אלינו בכתובת: team@bizpulse.space",
               ],
             },
             {
@@ -169,7 +169,7 @@ export default function TermsOfUse() {
             {
               title: "7. Contact",
               paragraphs: [
-                "For questions regarding these Terms of Use, contact: oilay189@gmail.com",
+                "For questions regarding these Terms of Use, contact: team@bizpulse.space",
               ],
             },
             {
