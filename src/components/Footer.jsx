@@ -45,7 +45,7 @@ function Footer() {
           </a>
 
           <a
-            href="mailto:eam@bizpulse.space"
+            href="mailto:team@bizpulse.space"
             className="text-sm text-gray-500 transition hover:text-[#bf9827]"
           >
            team@bizpulse.space
