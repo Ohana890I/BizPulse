@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
               title: "6. זכויות ופניה אלינו",
               paragraphs: [
                 "באפשרותכם לפנות אלינו לצורך שאלות בנוגע לפרטיות, תיקון מידע, או בקשת מחיקה.",
-                "ליצירת קשר: eam@bizpulse.space",
+                "ליצירת קשר: team@bizpulse.space",
               ],
             },
             {
