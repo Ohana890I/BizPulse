@@ -38,7 +38,7 @@ function Footer() {
           </div>
 
           <a
-            href="mailto:oilay189@gmail.com"
+            href="mailto:team@bizpulse.space"
             className="text-[#D4AF37] transition hover:text-[#bf9827]"
           >
             {content.contact}
