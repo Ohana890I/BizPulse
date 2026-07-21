@@ -159,7 +159,7 @@ export default function PrivacyPolicy() {
               title: "6. Your Rights and Contact",
               paragraphs: [
                 "You can contact us with privacy questions, data correction requests, or deletion requests.",
-                "Contact: oilay189@gmail.com",
+                "Contact: team@bizpulse.space",
               ],
             },
             {
