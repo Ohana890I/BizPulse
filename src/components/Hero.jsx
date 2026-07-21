@@ -14,7 +14,7 @@ function Hero({ onStartSurvey }) {
             "אנחנו מדברים עם בעלי עסקים כדי להבין את האתגרים הגדולים ביותר שלהם. התשובות שלכם יעזרו לנו לבנות תוכנה שבאמת תחסוך זמן, כסף ותסכול.",
           benefitsTitle: "מה יוצא לכם מזה?",
           benefitsText:
-            "בתמורה למענה מלא על הסקר, תקבלו חודש שלם בחינם עם גישה למוצר שלנו. במהלך החודש תוכלו לעבוד עם הכלים, לבדוק איך הם חוסכים זמן בניהול היומיומי, ולראות בפועל איך המערכת מפחיתה עומס ותקלות. זו הזדמנות אמיתית להתנסות ללא עלות ולתת לנו פידבק שישפיע על הפיתוח הבא.",
+            "במילוי הסקר אתם שומרים לעצמכם Founder Pass עם הטבה מלאה: חודש ראשון בחינם על המוצר הראשון של Pulse, 50% הנחה לכל אחד מ-12 החודשים הבאים, גישה מוקדמת לפיצ'רים ומוצרים עתידיים, וסטטוס Founder כאחד העסקים הראשונים שמעצבים את המערכת. המשמעות היא חיסכון כספי אמיתי, יתרון תפעולי לפני ההשקה הרשמית, והשפעה ישירה על מה שנבנה עבורכם.",
           cta: "התחל סקר",
           points: ["✅ אנונימי", "⏱️ 3 דקות", "💡 השפעה עסקית אמיתית"],
         }
@@ -26,7 +26,7 @@ function Hero({ onStartSurvey }) {
             "We're talking to business owners to understand their biggest challenges. Your answers will help us build software that actually saves time, money and frustration.",
           benefitsTitle: "What's in it for you?",
           benefitsText:
-            "When you complete the survey, you'll receive one full month of free access to our product. Use this time to explore the platform, test real workflows in your business, and see how much time you can save week by week. Your feedback will directly shape what we build next, and you'll be among the first to benefit from it.",
+            "By completing the survey, you secure the full Founder Pass package: 1 full month free on the first Pulse product, 50% off for the next 12 months, early access to upcoming features and products, and official Founder status as one of our first supporters. It gives you meaningful cost savings, early operational advantage, and a direct voice in what we build next.",
           cta: "Start Survey",
           points: ["✅ Anonymous", "⏱️ 3 Minutes", "💡 Real Business Impact"],
         };

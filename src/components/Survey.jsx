@@ -3,9 +3,21 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  limit,
+  query,
+  serverTimestamp,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useLanguage } from "../i18n/LanguageProvider";
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const MAX_CODE_RETRIES = 10;
 
 const questionBank = [
   {
@@ -162,6 +174,69 @@ const questionBank = [
   },
 ];
 
+function isValidEmail(value) {
+  return EMAIL_REGEX.test(value.trim());
+}
+
+function getRandomBytes(length) {
+  if (typeof globalThis.crypto?.getRandomValues === "function") {
+    const bytes = new Uint8Array(length);
+    globalThis.crypto.getRandomValues(bytes);
+    return bytes;
+  }
+
+  return Uint8Array.from(
+    Array.from({ length }, () => Math.floor(Math.random() * 256))
+  );
+}
+
+function randomCodeSegment(length) {
+  const bytes = getRandomBytes(length);
+  let segment = "";
+
+  for (let index = 0; index < length; index += 1) {
+    segment += CODE_ALPHABET[bytes[index] % CODE_ALPHABET.length];
+  }
+
+  return segment;
+}
+
+function generateFounderCode() {
+  return `FOUNDER-${randomCodeSegment(4)}-${randomCodeSegment(4)}`;
+}
+
+async function sendFounderWelcomeEmail(email) {
+  const response = await fetch("/api/emails/welcome-founder", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Welcome email failed with status ${response.status}`);
+  }
+}
+
+async function generateUniqueFounderCode() {
+  for (let attempt = 0; attempt < MAX_CODE_RETRIES; attempt += 1) {
+    const code = generateFounderCode();
+    const codeQuery = query(
+      collection(db, "founderPasses"),
+      where("founderCode", "==", code),
+      limit(1)
+    );
+    const codeSnapshot = await getDocs(codeQuery);
+
+    if (codeSnapshot.empty) {
+      return code;
+    }
+  }
+
+  throw new Error("Unable to generate a unique founder code.");
+}
+
 export default function Survey() {
   const { language } = useLanguage();
   const isHebrew = language === "he";
@@ -175,13 +250,42 @@ export default function Survey() {
         submitting: "שולח...",
         thankYou: "תודה רבה!",
         support: "המשוב שלכם עוזר לנו לבנות תוכנה טובה יותר.",
-        notifyTitle: "רוצים לדעת מתי Pulse מושק?",
+        founderPassTitle: "🎁 Founder Pass",
+        founderPassDescription: "כל עסק שמשלים את הסקר יקבל:",
+        founderPassBenefits: [
+          "🚀 חודש 1 בחינם על המוצר הראשון של Pulse.",
+          "💸 50% הנחה ל-12 החודשים הבאים.",
+          "⭐ גישה מוקדמת למוצרים ופיצ'רים עתידיים.",
+          "👑 סטטוס Founder כאחד התומכים הראשונים שלנו.",
+        ],
+        notifyTitle: "רוצים לשריין את Founder Pass שלכם להשקה של Pulse?",
         emailPlaceholder: "your@email.com",
-        notifyButton: "עדכנו אותי",
+        notifyButton: "שריינו את Founder Pass שלי",
+        marketingConsent:
+          "אני מסכים/ה לקבל עדכונים מ-Pulse לגבי השקות מוצר, הטבות Founder והודעות חשובות.",
+        invalidEmail: "נא להזין כתובת אימייל תקינה.",
+        alreadyReserved: "כבר שריינתם Founder Pass עם כתובת האימייל הזו.",
+        reserveError: "לא הצלחנו לשריין Founder Pass כרגע. נסו שוב.",
+        reserveSuccessTitle: "🎉 Founder Pass שלכם שוריין בהצלחה!",
+        reserveSuccessBody: "תודה שעזרתם לנו לבנות את Pulse.",
+        reserveSuccessNote:
+          "כש-Pulse יושק רשמית, נשלח את Founder Pass האישי שלכם ישירות לאימייל.",
+        reserveSuccessIncludes: "Founder Pass שלכם כולל:",
+        reserveIncludes: [
+          "🚀 חודש 1 בחינם",
+          "💸 50% הנחה ל-12 חודשים",
+          "⭐ גישה מוקדמת",
+          "👑 סטטוס Founder",
+        ],
+        securityTitle: "אבטחת Founder Pass",
+        securityPoints: [
+          "מקושר לכתובת האימייל של הבעלים בלבד",
+          "ניתן למימוש חד פעמי בלבד",
+          "לא ניתן להעברה למשתמש אחר",
+          "יישלח באימייל רק בעת ההשקה הרשמית",
+        ],
         submitAnother: "שליחת תגובה נוספת",
         submitError: "שליחת הסקר נכשלה.",
-        saveError: "לא הצלחנו לשמור את האימייל.",
-        savedEmail: "נרשמתם בהצלחה! 🎉",
         consentPrefix: "בשליחת הסקר הינכם מסכימים ומאשרים את",
         privacy: "מדיניות הפרטיות",
         and: "ו",
@@ -196,13 +300,42 @@ export default function Survey() {
         submitting: "Submitting...",
         thankYou: "Thank You!",
         support: "Your feedback helps us build better software.",
-        notifyTitle: "Want to know when Pulse launches?",
+        founderPassTitle: "🎁 Founder Pass",
+        founderPassDescription: "Every business that completes the survey will receive:",
+        founderPassBenefits: [
+          "🚀 1 month FREE on the first Pulse product.",
+          "💸 50% OFF for the following 12 months.",
+          "⭐ Early access to future products and features.",
+          "👑 Founder status as one of our first supporters.",
+        ],
+        notifyTitle: "Want to reserve your Founder Pass for the Pulse launch?",
         emailPlaceholder: "your@email.com",
-        notifyButton: "Notify Me",
+        notifyButton: "Reserve My Founder Pass",
+        marketingConsent:
+          "I agree to receive updates from Pulse regarding product launches, Founder rewards and important announcements.",
+        invalidEmail: "Please enter a valid email address.",
+        alreadyReserved: "You have already reserved your Founder Pass.",
+        reserveError: "We could not reserve your Founder Pass right now. Please try again.",
+        reserveSuccessTitle: "🎉 Your Founder Pass has been successfully reserved!",
+        reserveSuccessBody: "Thank you for helping us build Pulse.",
+        reserveSuccessNote:
+          "When Pulse officially launches, we will send your personal Founder Pass directly to your email.",
+        reserveSuccessIncludes: "Your Founder Pass includes:",
+        reserveIncludes: [
+          "🚀 1 month FREE",
+          "💸 50% OFF for 12 months",
+          "⭐ Early access",
+          "👑 Founder status",
+        ],
+        securityTitle: "Founder Pass Security",
+        securityPoints: [
+          "Linked to the owner's email only",
+          "Can only be redeemed once",
+          "Cannot be transferred to another user",
+          "Will be sent by email only at official launch",
+        ],
         submitAnother: "Submit another response",
         submitError: "Failed to submit survey.",
-        saveError: "Couldn't save email.",
-        savedEmail: "You're on the list! 🎉",
         consentPrefix: "By submitting this survey, you agree to our",
         privacy: "Privacy Policy",
         and: "and",
@@ -213,6 +346,12 @@ export default function Survey() {
   const [answers,setAnswers]=useState(Array(questionBank.length).fill(""));
   const [completed,setCompleted]=useState(false);
   const [email,setEmail]=useState("");
+  const [marketingConsent,setMarketingConsent]=useState(false);
+  const [emailError,setEmailError]=useState("");
+  const [founderError,setFounderError]=useState("");
+  const [founderNotice,setFounderNotice]=useState("");
+  const [founderReserved,setFounderReserved]=useState(false);
+  const [reservingFounderPass,setReservingFounderPass]=useState(false);
   const [sending,setSending]=useState(false);
 
   const current=questionBank[step];
@@ -262,21 +401,74 @@ export default function Survey() {
     if(step>0) setStep(step-1);
   };
 
-  const saveEmail=async()=>{
-    if(!email.trim()) return;
+  const reserveFounderPass=async()=>{
+    const normalizedEmail=email.trim().toLowerCase();
+
+    if(!isValidEmail(normalizedEmail)){
+      setEmailError(copy.invalidEmail);
+      return;
+    }
+
+    if(!marketingConsent){
+      return;
+    }
+
+    setEmailError("");
+    setFounderError("");
+    setFounderNotice("");
+    setReservingFounderPass(true);
 
     try{
-      await addDoc(collection(db,"emails"),{
-        email:email.trim(),
+      const existingPassQuery = query(
+        collection(db, "founderPasses"),
+        where("email", "==", normalizedEmail),
+        limit(1)
+      );
+      const existingPassSnapshot = await getDocs(existingPassQuery);
+
+      if(!existingPassSnapshot.empty){
+        setFounderNotice(copy.alreadyReserved);
+        return;
+      }
+
+      const founderCode = await generateUniqueFounderCode();
+
+      await addDoc(collection(db,"founderPasses"),{
+        email:normalizedEmail,
+        founderCode,
+        marketingConsent:true,
+        used:false,
+        usedAt:null,
+        surveyCompleted:true,
         createdAt:serverTimestamp()
       });
-      alert(copy.savedEmail);
+
+      await addDoc(collection(db,"emails"),{
+        email:normalizedEmail,
+        createdAt:serverTimestamp()
+      });
+
+      try {
+        await sendFounderWelcomeEmail(normalizedEmail);
+      } catch (emailSendError) {
+        console.error("Founder pass reserved but welcome email failed", {
+          email: normalizedEmail,
+          error: emailSendError?.message || emailSendError,
+        });
+      }
+
+      setFounderReserved(true);
       setEmail("");
+      setMarketingConsent(false);
     }catch(e){
       console.error(e);
-      alert(copy.saveError);
+      setFounderError(copy.reserveError);
+    }finally{
+      setReservingFounderPass(false);
     }
   };
+
+  const canReserveFounderPass = isValidEmail(email) && marketingConsent && !reservingFounderPass;
 
   if(completed){
     return(
@@ -299,30 +491,100 @@ export default function Survey() {
             {copy.support}
           </p>
 
-          <h2 className="text-2xl font-bold mb-3">
-            {copy.notifyTitle}
-          </h2>
+          {founderReserved ? (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 rounded-3xl border border-emerald-200 bg-emerald-50 p-6 text-left"
+            >
+              <h2 className="text-2xl font-extrabold text-emerald-900">{copy.reserveSuccessTitle}</h2>
+              <p className="mt-3 text-sm leading-7 text-emerald-900 sm:text-base">{copy.reserveSuccessBody}</p>
+              <p className="mt-2 text-sm leading-7 text-emerald-800 sm:text-base">{copy.reserveSuccessNote}</p>
 
-          <input
-            type="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
-            placeholder={copy.emailPlaceholder}
-            className="w-full rounded-xl border p-4 mb-4"
-          />
+              <p className="mt-5 text-sm font-semibold text-emerald-900">{copy.reserveSuccessIncludes}</p>
+              <ul className="mt-2 space-y-1 text-sm text-emerald-900">
+                {copy.reserveIncludes.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </motion.div>
+          ) : (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 rounded-3xl border border-[#D4AF37]/30 bg-gradient-to-br from-[#fffaf0] via-white to-[#f7faff] p-6 text-left shadow-lg"
+              >
+                <h2 className="text-2xl font-extrabold text-gray-900">{copy.founderPassTitle}</h2>
+                <p className="mt-2 text-sm font-medium text-gray-700 sm:text-base">{copy.founderPassDescription}</p>
 
-          <button
-            onClick={saveEmail}
-            className="w-full rounded-xl bg-[#D4AF37] py-4 text-white font-semibold"
-          >
-            {copy.notifyButton}
-          </button>
+                <ul className="mt-4 space-y-2 text-sm text-gray-700 sm:text-base">
+                  {copy.founderPassBenefits.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+
+                <div className="mt-5 rounded-2xl bg-white/70 p-4 text-xs text-gray-600 sm:text-sm">
+                  <p className="font-semibold text-gray-800">{copy.securityTitle}</p>
+                  <ul className="mt-2 space-y-1">
+                    {copy.securityPoints.map((item) => (
+                      <li key={item}>- {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+
+              <h2 className="text-2xl font-bold mb-3">
+                {copy.notifyTitle}
+              </h2>
+
+              <input
+                type="email"
+                value={email}
+                onChange={(e)=>{
+                  setEmail(e.target.value);
+                  if(emailError){
+                    setEmailError("");
+                  }
+                }}
+                placeholder={copy.emailPlaceholder}
+                className="w-full rounded-xl border p-4 mb-3"
+              />
+
+              <label className="mb-4 flex items-start gap-3 text-left text-sm text-gray-600">
+                <input
+                  type="checkbox"
+                  checked={marketingConsent}
+                  onChange={(event)=>setMarketingConsent(event.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]"
+                />
+                <span>{copy.marketingConsent}</span>
+              </label>
+
+              {emailError ? <p className="mb-2 text-left text-sm text-rose-600">{emailError}</p> : null}
+              {founderNotice ? <p className="mb-2 text-left text-sm text-amber-700">{founderNotice}</p> : null}
+              {founderError ? <p className="mb-2 text-left text-sm text-rose-600">{founderError}</p> : null}
+
+              <button
+                onClick={reserveFounderPass}
+                disabled={!canReserveFounderPass}
+                className="w-full rounded-xl bg-[#D4AF37] py-4 font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {reservingFounderPass ? copy.submitting : copy.notifyButton}
+              </button>
+            </>
+          )}
 
           <button
             onClick={()=>{
               setCompleted(false);
               setStep(0);
               setEmail("");
+              setMarketingConsent(false);
+              setEmailError("");
+              setFounderError("");
+              setFounderNotice("");
+              setFounderReserved(false);
               setAnswers(Array(questionBank.length).fill(""));
             }}
             className="mt-6 underline text-gray-500"
