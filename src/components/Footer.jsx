@@ -48,7 +48,7 @@ function Footer() {
             href="mailto:eam@bizpulse.space"
             className="text-sm text-gray-500 transition hover:text-[#bf9827]"
           >
-            oilay189@gmail.com
+           team@bizpulse.space
           </a>
         </div>
       </div>
