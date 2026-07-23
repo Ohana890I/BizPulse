@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
+import MissionProgressCard from "../components/MissionProgressCard";
 import Features from "../components/Features";
 import Survey from "../components/Survey";
 import Footer from "../components/Footer";
@@ -19,6 +20,7 @@ function Home() {
     <div className="min-h-screen bg-[#FAFAFA] text-gray-900">
       <Navbar onStartSurvey={scrollToSurvey} />
       <Hero onStartSurvey={scrollToSurvey} />
+      <MissionProgressCard />
       <Features />
       <Survey />
       <Footer />
