@@ -8,7 +8,7 @@ function About() {
     language === "he"
       ? {
           eyebrow: "מי עומד מאחורי BizPulse?",
-          title: "נעים להכיר, אני Ilay Yohana.",
+          title: "נעים להכיר, אני עילאי אוחנה.",
           description:
             "BizPulse היא יוזמה עצמאית שהקמתי מתוך מטרה פשוטה: לבנות כלים שבאמת עוזרים לבעלי עסקים, על בסיס מה שהם צריכים ביום־יום — לא על בסיס ניחושים.",
           mission:
@@ -21,7 +21,7 @@ function About() {
         }
       : {
           eyebrow: "Who is behind BizPulse?",
-          title: "Nice to meet you, I'm Ilay Yohana.",
+          title: "Nice to meet you, I'm Ilay ohana.",
           description:
             "BizPulse is an independent initiative I started with a simple goal: to build tools that genuinely help business owners, based on what they need every day — not on guesswork.",
           mission:
