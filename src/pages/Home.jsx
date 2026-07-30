@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import MissionProgressCard from "../components/MissionProgressCard";
 import Features from "../components/Features";
+import About from "../components/About";
 import Survey from "../components/Survey";
 import Footer from "../components/Footer";
 
@@ -21,6 +22,7 @@ function Home() {
       <Navbar onStartSurvey={scrollToSurvey} />
       <Hero onStartSurvey={scrollToSurvey} />
       <MissionProgressCard />
+      <About />
       <Features />
       <Survey />
       <Footer />

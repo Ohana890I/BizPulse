@@ -8,10 +8,10 @@ function Hero({ onStartSurvey }) {
     language === "he"
       ? {
           badge: "🚀 עזרו לנו לבנות תוכנה טובה יותר לעסקים",
-          title1: "להפסיק לנחש.",
-          title2: "להתחיל להקשיב.",
+          title1: "בעלי עסקים:",
+          title2: "מה הכי מבזבז לכם זמן בעסק?",
           description:
-            "אנחנו מדברים עם בעלי עסקים כדי להבין את האתגרים הגדולים ביותר שלהם. התשובות שלכם יעזרו לנו לבנות תוכנה שבאמת תחסוך זמן, כסף ותסכול.",
+            "ענו על סקר אנונימי של 3 דקות, עזרו לנו לבחור איזו מערכת לבנות — וקבלו חודש חינם ו־50% הנחה לשנה כמייסדים הראשונים.",
           benefitsTitle: "מה יוצא לכם מזה?",
           benefitsText:
             "במילוי הסקר אתם שומרים לעצמכם Founder Pass עם הטבה מלאה: חודש ראשון בחינם על המוצר הראשון של Pulse, 50% הנחה לכל אחד מ-12 החודשים הבאים, גישה מוקדמת לפיצ'רים ומוצרים עתידיים, וסטטוס Founder כאחד העסקים הראשונים שמעצבים את המערכת. המשמעות היא חיסכון כספי אמיתי, יתרון תפעולי לפני ההשקה הרשמית, והשפעה ישירה על מה שנבנה עבורכם.",
@@ -20,10 +20,10 @@ function Hero({ onStartSurvey }) {
         }
       : {
           badge: "🚀 Help Build Better Business Software",
-          title1: "Stop Guessing.",
-          title2: "Start Listening.",
+          title1: "Business owners:",
+          title2: "What wastes the most time in your business?",
           description:
-            "We're talking to business owners to understand their biggest challenges. Your answers will help us build software that actually saves time, money and frustration.",
+            "Take our anonymous 3-minute survey, help us choose what to build — and get your first month free plus 50% off for a year as one of our founding businesses.",
           benefitsTitle: "What's in it for you?",
           benefitsText:
             "By completing the survey, you secure the full Founder Pass package: 1 full month free on the first Pulse product, 50% off for the next 12 months, early access to upcoming features and products, and official Founder status as one of our first supporters. It gives you meaningful cost savings, early operational advantage, and a direct voice in what we build next.",
